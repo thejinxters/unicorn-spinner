@@ -23,6 +23,7 @@ function App() {
   });
   const [winner, setWinner] = useState<string | null>(null);
   const [isSpinning, setIsSpinning] = useState<boolean>(false);
+  const [spinDuration, setSpinDuration] = useState<number>(0);
 
   useEffect(() => {
     localStorage.setItem('names', JSON.stringify(names));
@@ -39,18 +40,25 @@ function App() {
     setNames(newNames);
   };
 
+  const getRandomTimeout = () => {
+    return Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000;
+  };
+
   const handleSpin = () => {
     if (names.length < 2) {
       alert('Please add at least 2 names to spin!');
       return;
     }
     
+    const newSpinDuration = getRandomTimeout();
+    setSpinDuration(newSpinDuration);
+
     setIsSpinning(true);
     setWinner(null);
     
     setTimeout(() => {
       setIsSpinning(false);
-    }, 5000);
+    }, newSpinDuration);
   };
 
   const handleSetWinner = (selectedWinner: string) => {
@@ -72,6 +80,7 @@ function App() {
         winner={winner}
         onSpin={handleSpin}
         onSelectWinner={handleSetWinner}
+        spinDuration={spinDuration}
       />
       <NameList 
         names={names} 

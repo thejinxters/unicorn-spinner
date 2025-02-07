@@ -17,7 +17,7 @@ const WheelContainer = styled.div`
   margin: 40px auto;
 `;
 
-const UnicornSpinner = styled.div<{ $spinning: boolean; $degrees: number; $currentRotation: number }>`
+const UnicornSpinner = styled.div<{ $spinning: boolean; $degrees: number; $currentRotation: number; $duration: number }>`
   width: 240px;
   height: 240px;
   position: absolute;
@@ -25,7 +25,7 @@ const UnicornSpinner = styled.div<{ $spinning: boolean; $degrees: number; $curre
   left: 50%;
   transform-origin: center;
   ${props => props.$spinning ? css`
-    animation: ${spin(props.$degrees)} 5s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+    animation: ${spin(props.$degrees)} ${props.$duration}ms cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
   ` : css`
     transform: translate(-50%, -50%) rotate(${props.$currentRotation}deg);
   `}
@@ -99,9 +99,10 @@ interface SpinnerWheelProps {
   winner: string | null;
   onSpin: () => void;
   onSelectWinner: (winner: string) => void;
+  spinDuration: number;
 }
 
-function SpinnerWheel({ names, isSpinning, winner, onSpin, onSelectWinner }: SpinnerWheelProps) {
+function SpinnerWheel({ names, isSpinning, winner, onSpin, onSelectWinner, spinDuration }: SpinnerWheelProps) {
   const [spinDegrees, setSpinDegrees] = useState<number>(0);
   const [currentRotation, setCurrentRotation] = useState<number>(0);
   const [targetWinner, setTargetWinner] = useState<string | null>(null);
@@ -113,9 +114,9 @@ function SpinnerWheel({ names, isSpinning, winner, onSpin, onSelectWinner }: Spi
       setTargetWinner(newWinner);
       setTimeout(() => {
         onSelectWinner(newWinner);
-      }, 5000);
+      }, spinDuration);
     }
-  }, [isSpinning, names, onSelectWinner]);
+  }, [isSpinning, names, onSelectWinner, spinDuration]);
 
   useEffect(() => {
     if (isSpinning && targetWinner) {
@@ -156,6 +157,7 @@ function SpinnerWheel({ names, isSpinning, winner, onSpin, onSelectWinner }: Spi
           $spinning={isSpinning} 
           $degrees={spinDegrees}
           $currentRotation={currentRotation}
+          $duration={spinDuration}
         >
           <img 
             src="/unicorn.webp" 
