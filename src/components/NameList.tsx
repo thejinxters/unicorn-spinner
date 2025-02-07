@@ -53,7 +53,13 @@ const RemoveAllButton = styled.button`
   }
 `;
 
-function NameList({ names, onRemove, onRemoveAll }) {
+interface NameListProps {
+  names: string[];
+  onRemove: (index: number) => void;
+  onRemoveAll: () => void;
+}
+
+function NameList({ names, onRemove, onRemoveAll }: NameListProps) {
   return (
     <div>
       <List>

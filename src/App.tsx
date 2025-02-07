@@ -17,24 +17,24 @@ const Title = styled.h1`
 `;
 
 function App() {
-  const [names, setNames] = useState(() => {
+  const [names, setNames] = useState<string[]>(() => {
     const savedNames = localStorage.getItem('names');
     return savedNames ? JSON.parse(savedNames) : [];
   });
-  const [winner, setWinner] = useState(null);
-  const [isSpinning, setIsSpinning] = useState(false);
+  const [winner, setWinner] = useState<string | null>(null);
+  const [isSpinning, setIsSpinning] = useState<boolean>(false);
 
   useEffect(() => {
     localStorage.setItem('names', JSON.stringify(names));
   }, [names]);
 
-  const addName = (name) => {
+  const addName = (name: string) => {
     if (name.trim()) {
       setNames([...names, name.trim()]);
     }
   };
 
-  const removeName = (index) => {
+  const removeName = (index: number) => {
     const newNames = names.filter((_, i) => i !== index);
     setNames(newNames);
   };
@@ -48,14 +48,12 @@ function App() {
     setIsSpinning(true);
     setWinner(null);
     
-    // Winner will be determined by the SpinnerWheel component
     setTimeout(() => {
       setIsSpinning(false);
     }, 5000);
   };
 
-  // Add a function to set the winner
-  const handleSetWinner = (selectedWinner) => {
+  const handleSetWinner = (selectedWinner: string) => {
     setWinner(selectedWinner);
   };
 

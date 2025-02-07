@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 
-const spin = (degrees) => keyframes`
+const spin = (degrees: number) => keyframes`
   from {
     transform: translate(-50%, -50%) rotate(0deg);
   }
@@ -17,7 +17,7 @@ const WheelContainer = styled.div`
   margin: 40px auto;
 `;
 
-const UnicornSpinner = styled.div`
+const UnicornSpinner = styled.div<{ $spinning: boolean; $degrees: number; $currentRotation: number }>`
   width: 240px;
   height: 240px;
   position: absolute;
@@ -34,7 +34,6 @@ const UnicornSpinner = styled.div`
     width: 100%;
     height: 100%;
     object-fit: contain;
-    /* Adjust rotation to make horn point right */
     transform: rotate(-90deg);
   }
 `;
@@ -47,7 +46,7 @@ const NameCircle = styled.div`
   left: 0;
 `;
 
-const Name = styled.div`
+const Name = styled.div<{ $angle: number; $radius: number }>`
   position: absolute;
   left: 50%;
   top: 50%;
@@ -94,11 +93,19 @@ const Winner = styled.div`
   font-weight: bold;
 `;
 
-function SpinnerWheel({ names, isSpinning, winner, onSpin, onSelectWinner }) {
-  const [spinDegrees, setSpinDegrees] = useState(0);
-  const [currentRotation, setCurrentRotation] = useState(0);
-  const [targetWinner, setTargetWinner] = useState(null);
-  const rotationRef = useRef(currentRotation);
+interface SpinnerWheelProps {
+  names: string[];
+  isSpinning: boolean;
+  winner: string | null;
+  onSpin: () => void;
+  onSelectWinner: (winner: string) => void;
+}
+
+function SpinnerWheel({ names, isSpinning, winner, onSpin, onSelectWinner }: SpinnerWheelProps) {
+  const [spinDegrees, setSpinDegrees] = useState<number>(0);
+  const [currentRotation, setCurrentRotation] = useState<number>(0);
+  const [targetWinner, setTargetWinner] = useState<string | null>(null);
+  const rotationRef = useRef<number>(currentRotation);
   
   useEffect(() => {
     if (isSpinning) {
@@ -116,16 +123,13 @@ function SpinnerWheel({ names, isSpinning, winner, onSpin, onSelectWinner }) {
       const baseRotation = 1800; // 5 full rotations
       const anglePerName = winnerIndex * 360 / names.length;
       
-      // Names start at top and go clockwise
-      // We need to rotate counterclockwise to point at the winner
-      // Since horn points right (0°), we need -90° to point at top first
       const targetAngle = anglePerName + 145;
-      const rotation = rotationRef.current
+      const rotation = rotationRef.current;
 
-      const newDegrees = baseRotation + targetAngle - (rotationRef.current % 360);
-      setSpinDegrees((rotation % 360)+ newDegrees);
+      const newDegrees = baseRotation + targetAngle - (rotation % 360);
+      setSpinDegrees((rotation % 360) + newDegrees);
 
-      setCurrentRotation((rotation % 360)+ newDegrees);
+      setCurrentRotation((rotation % 360) + newDegrees);
     }
   }, [isSpinning, targetWinner, names]);
 
@@ -136,7 +140,6 @@ function SpinnerWheel({ names, isSpinning, winner, onSpin, onSelectWinner }) {
       <WheelContainer>
         <NameCircle>
           {names.map((name, index) => {
-            // Position names clockwise starting from top
             const angle = (index * 360 / names.length);
             return (
               <Name 

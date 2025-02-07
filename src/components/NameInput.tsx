@@ -32,10 +32,14 @@ const AddButton = styled.button`
   }
 `;
 
-function NameInput({ onAdd }) {
-  const [name, setName] = useState('');
+interface NameInputProps {
+  onAdd: (name: string) => void;
+}
 
-  const handleSubmit = (e) => {
+function NameInput({ onAdd }: NameInputProps) {
+  const [name, setName] = useState<string>('');
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onAdd(name);
     setName('');
