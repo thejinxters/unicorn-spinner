@@ -61,6 +61,11 @@ function App() {
     setWinner(selectedWinner);
   };
 
+  const removeAllNames = () => {
+    setNames([]);
+    setWinner(null);
+  };
+
   return (
     <AppContainer>
       <Title>🦄 Unicorn Name Spinner 🦄</Title>
@@ -72,7 +77,11 @@ function App() {
         onSpin={handleSpin}
         onSelectWinner={handleSetWinner}
       />
-      <NameList names={names} onRemove={removeName} />
+      <NameList 
+        names={names} 
+        onRemove={removeName}
+        onRemoveAll={removeAllNames}
+      />
     </AppContainer>
   );
 }

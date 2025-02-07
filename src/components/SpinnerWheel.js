@@ -126,13 +126,13 @@ function SpinnerWheel({ names, isSpinning, winner, onSpin, onSelectWinner }) {
     }
   }, [isSpinning, targetWinner, names, currentRotation]);
 
-  console.log('Render values:', {
-    spinDegrees,
-    currentRotation,
-    isSpinning,
-    $spinning: isSpinning,
-    winner
-  });
+//   console.log('Render values:', {
+//     spinDegrees,
+//     currentRotation,
+//     isSpinning,
+//     $spinning: isSpinning,
+//     winner
+//   });
 
   const radius = 200;
 

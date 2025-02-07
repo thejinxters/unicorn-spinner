@@ -32,16 +32,44 @@ const RemoveButton = styled.button`
   }
 `;
 
-function NameList({ names, onRemove }) {
+const RemoveAllButton = styled.button`
+  background-color: #ff4757;
+  color: white;
+  border: none;
+  padding: 12px 40px;
+  border-radius: 25px;
+  font-size: 24px;
+  cursor: pointer;
+  margin: 20px 0;
+  transition: background-color 0.2s;
+  
+  &:hover {
+    background-color: #ff6b81;
+  }
+  
+  &:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+`;
+
+function NameList({ names, onRemove, onRemoveAll }) {
   return (
-    <List>
-      {names.map((name, index) => (
-        <ListItem key={index}>
-          {name}
-          <RemoveButton onClick={() => onRemove(index)}>✕</RemoveButton>
-        </ListItem>
-      ))}
-    </List>
+    <div>
+      <List>
+        {names.map((name, index) => (
+          <ListItem key={index}>
+            {name}
+            <RemoveButton onClick={() => onRemove(index)}>✕</RemoveButton>
+          </ListItem>
+        ))}
+      </List>
+      {names.length > 0 && (
+        <RemoveAllButton onClick={onRemoveAll}>
+          Remove All
+        </RemoveAllButton>
+      )}
+    </div>
   );
 }
 
