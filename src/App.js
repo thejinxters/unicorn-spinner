@@ -45,15 +45,13 @@ function App() {
       return;
     }
     
-    console.log('Starting spin');
     setIsSpinning(true);
     setWinner(null);
     
     // Winner will be determined by the SpinnerWheel component
     setTimeout(() => {
-      console.log('Setting winner after timeout');
       setIsSpinning(false);
-    }, 3000);
+    }, 5000);
   };
 
   // Add a function to set the winner

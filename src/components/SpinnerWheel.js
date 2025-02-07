@@ -25,7 +25,7 @@ const UnicornSpinner = styled.div`
   left: 50%;
   transform-origin: center;
   ${props => props.$spinning ? css`
-    animation: ${spin(props.$degrees)} 3s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+    animation: ${spin(props.$degrees)} 5s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
   ` : css`
     transform: translate(-50%, -50%) rotate(${props.$currentRotation}deg);
   `}
@@ -106,7 +106,7 @@ function SpinnerWheel({ names, isSpinning, winner, onSpin, onSelectWinner }) {
       setTargetWinner(newWinner);
       setTimeout(() => {
         onSelectWinner(newWinner);
-      }, 3000);
+      }, 5000);
     }
   }, [isSpinning, names, onSelectWinner]);
 
@@ -128,14 +128,6 @@ function SpinnerWheel({ names, isSpinning, winner, onSpin, onSelectWinner }) {
       setCurrentRotation((rotation % 360)+ newDegrees);
     }
   }, [isSpinning, targetWinner, names]);
-
-//   console.log('Render values:', {
-//     spinDegrees,
-//     currentRotation,
-//     isSpinning,
-//     $spinning: isSpinning,
-//     winner
-//   });
 
   const radius = 200;
 
