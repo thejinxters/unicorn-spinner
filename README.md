@@ -1,6 +1,15 @@
-# Getting Started with Create React App
+# Getting Started with Unicorn Name Spinner
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## About Unicorn Name Spinner
+
+The Unicorn Name Spinner is a fun application that allows users to add names and randomly select a winner by spinning a virtual wheel. Users can add names, remove them, and see the winner displayed after the spin.
+
+### Features
+
+- Add names to the spinner.
+- Remove individual names or clear all names.
+- Spin the wheel to randomly select a winner.
+- Responsive design for a better user experience.
 
 ## Available Scripts
 
@@ -45,26 +54,3 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
