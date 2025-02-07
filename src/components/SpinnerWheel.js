@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 
 const spin = (degrees) => keyframes`
@@ -98,6 +98,7 @@ function SpinnerWheel({ names, isSpinning, winner, onSpin, onSelectWinner }) {
   const [spinDegrees, setSpinDegrees] = useState(0);
   const [currentRotation, setCurrentRotation] = useState(0);
   const [targetWinner, setTargetWinner] = useState(null);
+  const rotationRef = useRef(currentRotation);
   
   useEffect(() => {
     if (isSpinning) {
@@ -119,12 +120,14 @@ function SpinnerWheel({ names, isSpinning, winner, onSpin, onSelectWinner }) {
       // We need to rotate counterclockwise to point at the winner
       // Since horn points right (0°), we need -90° to point at top first
       const targetAngle = anglePerName + 145;
-      const newDegrees = baseRotation + targetAngle - (currentRotation % 360);
+      const rotation = rotationRef.current
 
-      setCurrentRotation(prev => prev + newDegrees);
-      setSpinDegrees((currentRotation % 360)+ newDegrees);
+      const newDegrees = baseRotation + targetAngle - (rotationRef.current % 360);
+      setSpinDegrees((rotation % 360)+ newDegrees);
+
+      setCurrentRotation((rotation % 360)+ newDegrees);
     }
-  }, [isSpinning, targetWinner, names, currentRotation]);
+  }, [isSpinning, targetWinner, names]);
 
 //   console.log('Render values:', {
 //     spinDegrees,
