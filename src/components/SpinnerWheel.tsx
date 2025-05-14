@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 
 const spin = (degrees: number) => keyframes`
