@@ -159,8 +159,8 @@ function SpinnerWheel({ names, isSpinning, winner, onSpin, onSelectWinner, spinD
           $currentRotation={currentRotation}
           $duration={spinDuration}
         >
-          <img 
-            src="/unicorn.webp" 
+          <img
+            src={`${import.meta.env.BASE_URL}unicorn.webp`}
             alt="Unicorn Spinner"
           />
         </UnicornSpinner>
