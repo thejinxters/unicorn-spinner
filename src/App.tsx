@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import confetti from 'canvas-confetti';
 import SpinnerWheel from './components/SpinnerWheel';
 import NameInput from './components/NameInput';
 import NameList from './components/NameList';
@@ -28,6 +29,34 @@ function App() {
   useEffect(() => {
     localStorage.setItem('names', JSON.stringify(names));
   }, [names]);
+
+  useEffect(() => {
+    if (!winner) return;
+
+    const duration = 2000;
+    const end = Date.now() + duration;
+
+    (function frame() {
+      confetti({
+        particleCount: 4,
+        angle: 60,
+        spread: 60,
+        origin: { x: 0, y: 0.7 },
+        colors: ['#ff69b4', '#ff1493', '#ffd700', '#00bfff', '#9370db'],
+      });
+      confetti({
+        particleCount: 4,
+        angle: 120,
+        spread: 60,
+        origin: { x: 1, y: 0.7 },
+        colors: ['#ff69b4', '#ff1493', '#ffd700', '#00bfff', '#9370db'],
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    })();
+  }, [winner]);
 
   const addName = (name: string) => {
     if (name.trim()) {
