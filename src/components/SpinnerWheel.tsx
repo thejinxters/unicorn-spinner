@@ -11,15 +11,16 @@ const spin = (degrees: number) => keyframes`
 `;
 
 const WheelContainer = styled.div`
+  --wheel-size: min(500px, calc(100vw - 48px));
   position: relative;
-  width: 500px;
-  height: 500px;
+  width: var(--wheel-size);
+  height: var(--wheel-size);
   margin: 40px auto;
 `;
 
 const UnicornSpinner = styled.div<{ $spinning: boolean; $degrees: number; $currentRotation: number; $duration: number }>`
-  width: 240px;
-  height: 240px;
+  width: calc(var(--wheel-size) * 0.48);
+  height: calc(var(--wheel-size) * 0.48);
   position: absolute;
   top: 50%;
   left: 50%;
@@ -46,22 +47,22 @@ const NameCircle = styled.div`
   left: 0;
 `;
 
-const Name = styled.div<{ $angle: number; $radius: number }>`
+const Name = styled.div<{ $angle: number }>`
   position: absolute;
   left: 50%;
   top: 50%;
   transform-origin: 0 0;
   transform: ${props => `
     rotate(${props.$angle}deg)
-    translateX(${props.$radius}px)
+    translateX(calc(var(--wheel-size) * 0.4))
     rotate(-${props.$angle}deg)
     translate(-50%, -50%)
   `};
-  font-size: 24px;
+  font-size: clamp(14px, calc(var(--wheel-size) * 0.048), 24px);
   color: #ff69b4;
   font-weight: bold;
   text-align: center;
-  width: 120px;
+  width: calc(var(--wheel-size) * 0.24);
   user-select: none;
 `;
 
@@ -134,8 +135,6 @@ function SpinnerWheel({ names, isSpinning, winner, onSpin, onSelectWinner, spinD
     }
   }, [isSpinning, targetWinner, names]);
 
-  const radius = 200;
-
   return (
     <div>
       <WheelContainer>
@@ -143,10 +142,9 @@ function SpinnerWheel({ names, isSpinning, winner, onSpin, onSelectWinner, spinD
           {names.map((name, index) => {
             const angle = (index * 360 / names.length);
             return (
-              <Name 
-                key={index} 
-                $angle={angle} 
-                $radius={radius}
+              <Name
+                key={index}
+                $angle={angle}
               >
                 {name}
               </Name>
