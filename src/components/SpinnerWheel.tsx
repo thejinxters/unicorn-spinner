@@ -106,34 +106,27 @@ interface SpinnerWheelProps {
 function SpinnerWheel({ names, isSpinning, winner, onSpin, onSelectWinner, spinDuration }: SpinnerWheelProps) {
   const [spinDegrees, setSpinDegrees] = useState<number>(0);
   const [currentRotation, setCurrentRotation] = useState<number>(0);
-  const [targetWinner, setTargetWinner] = useState<string | null>(null);
   const rotationRef = useRef<number>(currentRotation);
-  
+
   useEffect(() => {
-    if (isSpinning) {
-      const newWinner = names[Math.floor(Math.random() * names.length)];
-      setTargetWinner(newWinner);
-      setTimeout(() => {
-        onSelectWinner(newWinner);
-      }, spinDuration);
-    }
+    if (!isSpinning) return;
+
+    const newWinner = names[Math.floor(Math.random() * names.length)];
+    const winnerIndex = names.indexOf(newWinner);
+    const baseRotation = 1800; // 5 full rotations
+    const anglePerName = winnerIndex * 360 / names.length;
+
+    const targetAngle = anglePerName + 145;
+    const rotation = rotationRef.current;
+
+    const newDegrees = baseRotation + targetAngle - (rotation % 360);
+    setSpinDegrees((rotation % 360) + newDegrees);
+    setCurrentRotation((rotation % 360) + newDegrees);
+
+    setTimeout(() => {
+      onSelectWinner(newWinner);
+    }, spinDuration);
   }, [isSpinning, names, onSelectWinner, spinDuration]);
-
-  useEffect(() => {
-    if (isSpinning && targetWinner) {
-      const winnerIndex = names.indexOf(targetWinner);
-      const baseRotation = 1800; // 5 full rotations
-      const anglePerName = winnerIndex * 360 / names.length;
-      
-      const targetAngle = anglePerName + 145;
-      const rotation = rotationRef.current;
-
-      const newDegrees = baseRotation + targetAngle - (rotation % 360);
-      setSpinDegrees((rotation % 360) + newDegrees);
-
-      setCurrentRotation((rotation % 360) + newDegrees);
-    }
-  }, [isSpinning, targetWinner, names]);
 
   return (
     <div>
